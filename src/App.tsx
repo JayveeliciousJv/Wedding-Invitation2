@@ -13,7 +13,7 @@ const queryClient = new QueryClient();
 export default function App() {
 return ( <QueryClientProvider client={queryClient}> <TooltipProvider> <Toaster /> <Sonner />
 
-```
+
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
@@ -23,7 +23,7 @@ return ( <QueryClientProvider client={queryClient}> <TooltipProvider> <Toaster /
 
   </TooltipProvider>
 </QueryClientProvider>
-```
+
 
 );
 }
