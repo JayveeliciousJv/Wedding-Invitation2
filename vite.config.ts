@@ -4,18 +4,21 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: "/Wedding-Invitation2/", // 🔴 ADD THIS LINE
+  base: "/Wedding-Invitation2/", // ✅ REQUIRED for GitHub Pages
+
   server: {
-    host: "::",
+    host: true, // cleaner than "::" and works better in most setups
     port: 8080,
     hmr: {
       overlay: false,
     },
   },
+
   plugins: [
     react(),
-    mode === "development" && componentTagger()
+    mode === "development" && componentTagger(),
   ].filter(Boolean),
+
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -26,7 +29,7 @@ export default defineConfig(({ mode }) => ({
       "react/jsx-runtime",
       "react/jsx-dev-runtime",
       "@tanstack/react-query",
-      "@tanstack/query-core"
+      "@tanstack/query-core",
     ],
   },
 }));
