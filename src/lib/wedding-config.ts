@@ -9,8 +9,8 @@ export const WEDDING = {
   quote: "The Lord has made everything beautiful in His time.",
   quoteRef: "Ecclesiastes 3:11",
   tagline: "The Lord has made everything beautiful in His time.",
-  // New motif palette — Charcoal & Gold
-  motif: ["#2E2E2E", "#3A3A3A", "#CBA135", "#F5F5F5"],
+  // Motif swatches (display only)
+  motif: ["#545454", "#737373", "#A6A6A6", "#B4B4B4"],
   attire: {
     title: "Attire",
     detail: "Semi-Formal",
