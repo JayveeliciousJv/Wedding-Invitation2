@@ -11,10 +11,10 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
     setTimeout(onOpen, 2200);
   };
 
-  // Flap height as % of envelope height. The triangular flap's visual center
-  // (centroid of the triangle) sits at 1/3 of the flap height from the top.
+  // Flap height as % of envelope height. The wax seal is anchored to the
+  // triangle tip/closure point so it naturally locks the envelope closed.
   const FLAP_PCT = 55;
-  const SEAL_TOP_PCT = FLAP_PCT / 3; // centroid of triangle = perfectly centered on flap
+  const SEAL_TOP_PCT = FLAP_PCT;
 
   return (
     <section className="section-dark relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden grain">
@@ -129,32 +129,31 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
             />
           </motion.div>
 
-          {/* WAX SEAL — centered on the triangular flap (centroid = 1/3 from top) */}
+          {/* WAX SEAL — centered on the flap closure point */}
           <AnimatePresence>
             {!opened && (
               <motion.div
-                initial={{ scale: 0, opacity: 0, rotate: -10 }}
-                animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                exit={{ scale: 0.6, opacity: 0 }}
+                initial={{ x: "-50%", y: "-50%", scale: 0, opacity: 0, rotate: -10 }}
+                animate={{ x: "-50%", y: "-50%", scale: 1, opacity: 1, rotate: 0 }}
+                exit={{ x: "-50%", y: "-50%", scale: 0.6, opacity: 0 }}
                 transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
                 className="absolute left-1/2 z-40 pointer-events-none"
                 style={{
                   top: `${SEAL_TOP_PCT}%`,
-                  transform: "translate(-50%, -50%)",
                 }}
               >
                 <div
-                  className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center"
+                  className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center overflow-hidden"
                   style={{
                     background:
-                      "radial-gradient(circle at 32% 28%, #fff4c2 0%, #f6d36b 18%, #cba135 48%, #8a6a1f 92%)",
+                      "radial-gradient(circle at 32% 24%, hsl(48 100% 92%) 0%, hsl(43 82% 68%) 17%, hsl(var(--gold)) 47%, hsl(43 64% 29%) 100%)",
                     boxShadow: [
-                      "0 0 30px color-mix(in oklab, var(--gold) 65%, transparent)",
+                      "0 0 28px hsl(var(--gold) / 0.55)",
                       "inset 0 3px 6px rgba(255,240,180,0.55)",
                       "inset 0 -5px 10px rgba(60,40,5,0.55)",
                       "0 6px 14px rgba(0,0,0,0.45)",
                     ].join(", "),
-                    border: "1.5px solid #6b5113",
+                    border: "1.5px solid hsl(43 69% 25%)",
                   }}
                 >
                   {/* Inner ring for embossed coin look */}
@@ -175,9 +174,9 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
                     }}
                   />
                   <span
-                    className="relative font-script text-2xl sm:text-3xl md:text-4xl"
+                    className="relative grid place-items-center font-script text-2xl sm:text-3xl md:text-4xl leading-none w-full h-full text-center"
                     style={{
-                      color: "#3a2a08",
+                      color: "hsl(43 76% 13%)",
                       textShadow:
                         "0 1px 0 rgba(255,235,170,0.6), 0 -1px 1px rgba(0,0,0,0.4)",
                     }}
