@@ -55,7 +55,7 @@ export function RSVP() {
         <SectionTitle
           eyebrow="Kindly Respond"
           title="Will You Attend?"
-          subtitle="Please reply by May 1, 2026"
+          subtitle={`Please reply by ${WEDDING.rsvpDeadline}`}
         />
 
         {status === "success" ? (
