@@ -1,35 +1,23 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import path from "path";
-import { componentTagger } from "lovable-tagger";
 
-export default defineConfig(({ mode }) => ({
-  base: "/", // ✅ REQUIRED for GitHub Pages
+// Clean production-safe Vite config
+export default defineConfig({
+base: "/", // ✅ Required for Vercel (root deployment)
 
-  server: {
-    host: true, // cleaner than "::" and works better in most setups
-    port: 8080,
-    hmr: {
-      overlay: false,
-    },
-  },
+server: {
+host: true,
+port: 8080,
+},
 
-  plugins: [
-    react(),
-    mode === "development" && componentTagger(),
-  ].filter(Boolean),
+plugins: [
+react(), // ✅ Standard React plugin (no CSP issues)
+],
 
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-    dedupe: [
-      "react",
-      "react-dom",
-      "react/jsx-runtime",
-      "react/jsx-dev-runtime",
-      "@tanstack/react-query",
-      "@tanstack/query-core",
-    ],
-  },
-}));
+resolve: {
+alias: {
+"@": path.resolve(__dirname, "./src"),
+},
+},
+});
