@@ -165,5 +165,5 @@ export const WEDDING = {
 
   musicUrl:
     "https://cdn.pixabay.com/download/audio/2022/03/15/audio_4b1b1b6a5b.mp3?filename=romantic-piano-100013.mp3",
-  rsvpEndpoint: "https://script.google.com/macros/s/AKfycbz9Q52FRIO2IBJRkAqag5pbBom2UuFpVhSk8pMv4D7aiV7qA2E2kA0bYoKs5FrP4j_q/exec",
+  rsvpEndpoint: "https://script.google.com/macros/s/AKfycbw-7Sjc0hJHs-Sb00Xb6GPWRlrUU9ycX3V-R4vjc0nHdia4hLrbhjMnd6zOXFlR_nA/exec",
 };
