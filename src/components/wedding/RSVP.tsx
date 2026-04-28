@@ -13,66 +13,62 @@ export function RSVP() {
   const [errorMsg, setErrorMsg] = useState("");
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    setStatus("loading");
-    setErrorMsg("");
+  setStatus("loading");
+  setErrorMsg("");
 
-    const fd = new FormData(e.currentTarget);
+  const form = e.currentTarget; // ✅ SAVE REFERENCE HERE
+  const fd = new FormData(form);
 
-    const payload: Record<string, string> = {
-      status: mode === "accept" ? "Accept" : "Decline",
-      fullName: "",
-      phone: "",
-      email: "",
-      note: "",
-      reason: "",
-      timestamp: new Date().toISOString(),
-    };
+  const payload: Record<string, string> = {
+    status: mode === "accept" ? "Accept" : "Decline",
+    fullName: "",
+    phone: "",
+    email: "",
+    note: "",
+    reason: "",
+    timestamp: new Date().toISOString(),
+  };
 
-    fd.forEach((value, key) => {
-      const v = String(value).trim();
+  fd.forEach((value, key) => {
+    const v = String(value).trim();
 
-      switch (key) {
-        case "name":
-          payload.fullName = v;
-          break;
-        case "phone":
-          payload.phone = v;
-          break;
-        case "email":
-          payload.email = v;
-          break;
-        case "note":
-          payload.note = v;
-          break;
-        case "reason":
-          payload.reason = v;
-          break;
-      }
+    switch (key) {
+      case "name":
+        payload.fullName = v;
+        break;
+      case "phone":
+        payload.phone = v;
+        break;
+      case "email":
+        payload.email = v;
+        break;
+      case "note":
+        payload.note = v;
+        break;
+      case "reason":
+        payload.reason = v;
+        break;
+    }
+  });
+
+  try {
+    await fetch(WEDDING.rsvpEndpoint, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify(payload),
     });
 
-    // validation
-    if (!payload.fullName || !payload.phone) {
-      setStatus("error");
-      setErrorMsg("Full name and phone number are required.");
-      return;
-    }
+    setStatus("success");
 
-    try {
-      await fetch(WEDDING.rsvpEndpoint, {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify(payload),
-      });
-
-      setStatus("success");
-      e.currentTarget.reset();
-    } catch (err) {
-      setStatus("error");
-      setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
-    }
-  };
+    // ✅ SAFE RESET
+    form.reset();
+  } catch (err) {
+    setStatus("error");
+    setErrorMsg("Something went wrong");
+  }
+};
 
   return (
     <section id="rsvp" className="section-light py-20 md:py-32 px-4 sm:px-6 lg:px-8">
