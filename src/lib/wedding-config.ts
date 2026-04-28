@@ -38,14 +38,14 @@ export const WEDDING = {
       "https://www.google.com/maps?q=Casa+Veronica+Events+Place+Villa+Pena+Subdivision+Goa+Camarines+Sur&output=embed",
   },
   timeline: [
-    { time: "1:30 PM", label: "Entourage Processional" },
-    { time: "2:00 PM", label: "Ceremony" },
-    { time: "3:30 PM", label: "Photos" },
-    { time: "4:00 PM", label: "Reception" },
-    { time: "4:30 PM", label: "Program" },
-    { time: "6:00 PM", label: "Dinner" },
-    { time: "6:30 PM", label: "Party" },
-  ],
+    { time: "1:30 PM", label: "Entourage Processional", icon: "Users" },
+    { time: "2:00 PM", label: "Ceremony", icon: "Church" },
+    { time: "3:30 PM", label: "Photos", icon: "Camera" },
+    { time: "4:00 PM", label: "Reception", icon: "MapPin" },
+    { time: "4:30 PM", label: "Program", icon: "Mic" },
+    { time: "6:00 PM", label: "Dinner", icon: "Utensils" },
+    { time: "6:30 PM", label: "Party", icon: "PartyPopper" },
+  ] as { time: string; label: string; icon: string }[],
   faqs: [
     {
       q: "What time should I arrive?",
