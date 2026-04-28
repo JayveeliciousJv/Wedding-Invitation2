@@ -14,7 +14,6 @@ export default function App() {
 return ( <QueryClientProvider client={queryClient}> <TooltipProvider> <Toaster /> <Sonner />
 
 ```
-    {/* SAFE ROUTER (NO BASENAME) */}
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
