@@ -4,7 +4,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: "/Wedding-Invitation2/", // ✅ REQUIRED for GitHub Pages
+  base: "/", // ✅ REQUIRED for GitHub Pages
 
   server: {
     host: true, // cleaner than "::" and works better in most setups
