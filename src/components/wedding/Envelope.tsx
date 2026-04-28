@@ -129,7 +129,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
             />
           </motion.div>
 
-          {/* WAX SEAL — perfectly centered horizontally; vertically pinned to flap edge */}
+          {/* WAX SEAL — centered on the triangular flap (centroid = 1/3 from top) */}
           <AnimatePresence>
             {!opened && (
               <motion.div
@@ -137,20 +137,51 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
                 animate={{ scale: 1, opacity: 1, rotate: 0 }}
                 exit={{ scale: 0.6, opacity: 0 }}
                 transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-                className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none"
-                style={{ top: `${FLAP_PCT}%` }}
+                className="absolute left-1/2 z-40 pointer-events-none"
+                style={{
+                  top: `${SEAL_TOP_PCT}%`,
+                  transform: "translate(-50%, -50%)",
+                }}
               >
                 <div
-                  className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center"
+                  className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center"
                   style={{
                     background:
-                      "radial-gradient(circle at 35% 30%, oklch(0.82 0.13 82), var(--gold) 60%, var(--gold-hover))",
-                    boxShadow:
-                      "0 0 28px color-mix(in oklab, var(--gold) 55%, transparent), inset 0 2px 6px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.3)",
-                    border: "1px solid color-mix(in oklab, var(--gold) 70%, black)",
+                      "radial-gradient(circle at 32% 28%, #fff4c2 0%, #f6d36b 18%, #cba135 48%, #8a6a1f 92%)",
+                    boxShadow: [
+                      "0 0 30px color-mix(in oklab, var(--gold) 65%, transparent)",
+                      "inset 0 3px 6px rgba(255,240,180,0.55)",
+                      "inset 0 -5px 10px rgba(60,40,5,0.55)",
+                      "0 6px 14px rgba(0,0,0,0.45)",
+                    ].join(", "),
+                    border: "1.5px solid #6b5113",
                   }}
                 >
-                  <span className="font-script text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-md">
+                  {/* Inner ring for embossed coin look */}
+                  <div
+                    className="absolute inset-[10%] rounded-full pointer-events-none"
+                    style={{
+                      border: "1px solid rgba(255,235,170,0.45)",
+                      boxShadow: "inset 0 0 8px rgba(0,0,0,0.25)",
+                    }}
+                  />
+                  {/* Specular highlight */}
+                  <div
+                    className="absolute top-[10%] left-[18%] w-[35%] h-[22%] rounded-full pointer-events-none"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse at center, rgba(255,255,255,0.55), transparent 70%)",
+                      filter: "blur(1px)",
+                    }}
+                  />
+                  <span
+                    className="relative font-script text-2xl sm:text-3xl md:text-4xl"
+                    style={{
+                      color: "#3a2a08",
+                      textShadow:
+                        "0 1px 0 rgba(255,235,170,0.6), 0 -1px 1px rgba(0,0,0,0.4)",
+                    }}
+                  >
                     {WEDDING.monogram}
                   </span>
                 </div>
