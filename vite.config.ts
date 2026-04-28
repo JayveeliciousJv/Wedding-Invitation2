@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
-base: "/", // ✅ Correct for Vercel
+base: "/",
 
 plugins: [react()],
 
@@ -11,5 +11,9 @@ resolve: {
 alias: {
 "@": path.resolve(__dirname, "./src"),
 },
+},
+
+build: {
+minify: "esbuild", // 🔥 avoids eval-based transforms
 },
 });
