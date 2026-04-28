@@ -54,13 +54,13 @@ export function Entourage() {
 
       <AnimatePresence>
         {open && (
-          <>
+          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[60] backdrop-blur-sm"
-              style={{ backgroundColor: "rgba(0,0,0,0.65)" }}
+              className="absolute inset-0 backdrop-blur-sm"
+              style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
               onClick={() => setOpen(false)}
             />
             <motion.div
@@ -70,7 +70,7 @@ export function Entourage() {
               transition={{ duration: 0.35 }}
               role="dialog"
               aria-modal="true"
-              className="fixed inset-x-4 top-1/2 -translate-y-1/2 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-[min(640px,calc(100%-2rem))] z-[61] rounded-2xl bg-warm-white border border-gold/30 shadow-soft max-h-[88vh] flex flex-col"
+              className="relative w-full max-w-lg sm:max-w-xl rounded-2xl bg-warm-white border border-gold/30 shadow-soft max-h-[88vh] flex flex-col"
             >
               <div className="flex items-center justify-between px-6 py-4 border-b border-border">
                 <p className="font-script text-3xl text-gold">
@@ -161,7 +161,7 @@ export function Entourage() {
                 </Group>
               </div>
             </motion.div>
-          </>
+          </div>
         )}
       </AnimatePresence>
     </section>
