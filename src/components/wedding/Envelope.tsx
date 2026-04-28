@@ -11,8 +11,10 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
     setTimeout(onOpen, 2200);
   };
 
-  // Flap height as % of envelope height — emblem sits exactly on this edge.
+  // Flap height as % of envelope height. The triangular flap's visual center
+  // (centroid of the triangle) sits at 1/3 of the flap height from the top.
   const FLAP_PCT = 55;
+  const SEAL_TOP_PCT = FLAP_PCT / 3; // centroid of triangle = perfectly centered on flap
 
   return (
     <section className="section-dark relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden grain">
