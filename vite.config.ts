@@ -12,8 +12,4 @@ alias: {
 "@": path.resolve(__dirname, "./src"),
 },
 },
-
-build: {
-minify: "esbuild", // 🔥 avoids eval-based transforms
-},
 });
