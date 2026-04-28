@@ -8,11 +8,14 @@ export default {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      screens: { "2xl": "1400px" },
     },
     extend: {
+      fontFamily: {
+        script: ["'Great Vibes'", "cursive"],
+        serif: ["'Playfair Display'", "serif"],
+        sans: ["'Poppins'", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -47,16 +50,18 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+        // Wedding palette — usable as bg-gold, text-gold, border-gold, ring-gold,
+        // hover:bg-gold, bg-gold/15, text-gold/80, etc.
+        gold: {
+          DEFAULT: "hsl(var(--gold))",
+          hover: "hsl(var(--gold-hover))",
         },
+        charcoal: {
+          DEFAULT: "hsl(var(--charcoal))",
+          2: "hsl(var(--charcoal-2))",
+        },
+        ivory: "hsl(var(--ivory))",
+        "warm-white": "hsl(var(--warm-white))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -65,20 +70,12 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
