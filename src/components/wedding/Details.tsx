@@ -23,16 +23,16 @@ export function Details() {
 
           {/* Motif */}
           <Card icon={<Palette size={26} className="text-gold" />} title="Motif">
-            <p className="text-gold font-medium tracking-wide">Charcoal & Neutrals</p>
-            <div className="flex justify-center gap-3 mt-4">
+            <p className="text-gold font-medium tracking-wide">Neutrals</p>
+            <div className="grid grid-cols-4 gap-3 mt-4 max-w-xs mx-auto">
               {WEDDING.motif.map((c) => (
                 <div key={c} className="flex flex-col items-center gap-1.5">
                   <span
-                    className="w-8 h-8 rounded-full ring-1 ring-white/20"
+                    className="w-12 h-12 rounded-xl ring-1 ring-white/20 shadow-soft transition-transform hover:scale-105"
                     style={{ backgroundColor: c }}
                     aria-label={c}
                   />
-                  <span className="text-[9px] tracking-[0.15em] text-secondary-soft/80">{c}</span>
+                  <span className="text-[9px] tracking-[0.1em] text-secondary-soft/80">{c}</span>
                 </div>
               ))}
             </div>
