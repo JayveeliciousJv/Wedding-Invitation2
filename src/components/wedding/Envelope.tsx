@@ -11,6 +11,9 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
     setTimeout(onOpen, 2200);
   };
 
+  // Flap height as % of envelope height — emblem sits exactly on this edge.
+  const FLAP_PCT = 55;
+
   return (
     <section className="section-dark relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden grain">
       <div
@@ -39,36 +42,44 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
         </p>
       </motion.div>
 
-      {/* Envelope wrapper — keeps perfect centering on all sizes */}
-      <div className="relative z-10 flex items-center justify-center w-full">
-        <div
-          className="relative w-[300px] h-[200px] sm:w-[400px] sm:h-[266px] md:w-[480px] md:h-[320px]"
+      {/* Envelope wrapper — perfectly centered on all sizes */}
+      <div className="relative z-10 w-full flex items-center justify-center">
+        <motion.button
+          type="button"
+          onClick={handleOpen}
+          whileHover={!opened ? { scale: 1.03 } : undefined}
+          whileTap={!opened ? { scale: 0.98 } : undefined}
+          transition={{ type: "spring", stiffness: 220, damping: 18 }}
+          aria-label="Open invitation"
+          className="relative w-full max-w-sm md:max-w-md aspect-[3/2] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 rounded-sm"
           style={{ perspective: "1600px" }}
         >
-          {/* Paper invitation — slides upward from inside the envelope */}
+          {/* Paper invitation — centered with flex, slides vertically from center */}
           <AnimatePresence>
             {opened && (
-              <motion.div
-                initial={{ y: "10%", opacity: 0, scale: 0.96 }}
-                animate={{ y: "-72%", opacity: 1, scale: 1 }}
-                transition={{ delay: 0.7, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[88%] h-[125%] z-10 rounded-md bg-warm-white border border-gold/30 shadow-soft flex flex-col items-center justify-center px-6 text-center"
-                style={{ color: "var(--charcoal)" }}
-              >
-                <p className="font-script text-2xl md:text-3xl text-gold">You are invited</p>
-                <div className="w-12 h-px bg-gold/50 my-2" />
-                <p className="font-serif text-base md:text-xl">to the wedding of</p>
-                <p className="font-script text-3xl md:text-4xl text-gold mt-1">
-                  {WEDDING.coupleOrder[0]} &amp; {WEDDING.coupleOrder[1]}
-                </p>
-                <p className="text-[10px] md:text-xs tracking-[0.3em] mt-3 uppercase opacity-70">
-                  June 13, 2026 — 1:30 PM
-                </p>
-              </motion.div>
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <motion.div
+                  initial={{ y: 40, opacity: 0, scale: 0.96 }}
+                  animate={{ y: "-60%", opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.7, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-[88%] aspect-[3/2.4] z-10 rounded-md bg-warm-white border border-gold/30 shadow-soft flex flex-col items-center justify-center px-6 text-center"
+                  style={{ color: "var(--charcoal)" }}
+                >
+                  <p className="font-script text-2xl md:text-3xl text-gold">You are invited</p>
+                  <div className="w-12 h-px bg-gold/50 my-2" />
+                  <p className="font-serif text-base md:text-xl">to the wedding of</p>
+                  <p className="font-script text-3xl md:text-4xl text-gold mt-1">
+                    {WEDDING.coupleOrder[0]} &amp; {WEDDING.coupleOrder[1]}
+                  </p>
+                  <p className="text-[10px] md:text-xs tracking-[0.3em] mt-3 uppercase opacity-70">
+                    June 13, 2026 — 1:30 PM
+                  </p>
+                </motion.div>
+              </div>
             )}
           </AnimatePresence>
 
-          {/* Envelope body (rectangular base) */}
+          {/* Envelope body */}
           <div
             className="absolute inset-0 z-20 rounded-sm border border-white/10 shadow-soft pointer-events-none overflow-hidden"
             style={{
@@ -77,7 +88,6 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
                 "inset 0 0 40px rgba(0,0,0,0.45), 0 20px 40px -20px rgba(0,0,0,0.6)",
             }}
           >
-            {/* Subtle V fold lines from bottom corners to center-top (where flap meets) */}
             <div
               className="absolute inset-0"
               style={{
@@ -85,12 +95,9 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
                   "linear-gradient(to top right, transparent 49.7%, rgba(255,255,255,0.05) 49.85%, rgba(255,255,255,0.05) 50.15%, transparent 50.3%), linear-gradient(to top left, transparent 49.7%, rgba(255,255,255,0.05) 49.85%, rgba(255,255,255,0.05) 50.15%, transparent 50.3%)",
               }}
             />
-            {/* Bottom shadow */}
             <div
               className="absolute left-0 right-0 bottom-0 h-1/2"
-              style={{
-                background: "linear-gradient(to top, rgba(0,0,0,0.18), transparent)",
-              }}
+              style={{ background: "linear-gradient(to top, rgba(0,0,0,0.18), transparent)" }}
             />
             <div className="absolute top-3 left-0 right-0 text-center">
               <p className="text-[9px] sm:text-[10px] tracking-[0.5em] text-gold/80 uppercase">
@@ -99,10 +106,10 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
             </div>
           </div>
 
-          {/* Triangular top flap — rotates open from top edge */}
+          {/* Triangular top flap */}
           <motion.div
             className="absolute left-0 right-0 top-0 z-30 origin-top pointer-events-none"
-            style={{ height: "55%", transformStyle: "preserve-3d" }}
+            style={{ height: `${FLAP_PCT}%`, transformStyle: "preserve-3d" }}
             initial={false}
             animate={{ rotateX: opened ? -178 : 0 }}
             transition={{ duration: 1.2, ease: [0.7, 0, 0.3, 1], delay: opened ? 0.2 : 0 }}
@@ -120,44 +127,45 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
             />
           </motion.div>
 
-          {/* Emblem — perfectly centered horizontally, vertically at flap closure (where flap meets body = 55% from top) */}
+          {/* WAX SEAL — perfectly centered horizontally; vertically pinned to flap edge */}
           <AnimatePresence>
             {!opened && (
-              <motion.button
-                onClick={handleOpen}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
+              <motion.div
+                initial={{ scale: 0, opacity: 0, rotate: -10 }}
+                animate={{ scale: 1, opacity: 1, rotate: 0 }}
                 exit={{ scale: 0.6, opacity: 0 }}
                 transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.92 }}
-                className="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 z-40 w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center cursor-pointer"
-                style={{
-                  background:
-                    "radial-gradient(circle at 35% 30%, oklch(0.82 0.13 82), var(--gold) 60%, var(--gold-hover))",
-                  boxShadow:
-                    "0 0 28px color-mix(in oklab, var(--gold) 55%, transparent), inset 0 2px 6px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.3)",
-                  border: "1px solid color-mix(in oklab, var(--gold) 70%, black)",
-                }}
-                aria-label="Open invitation"
+                className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none"
+                style={{ top: `${FLAP_PCT}%` }}
               >
-                <span className="font-script text-xl sm:text-2xl md:text-3xl text-white drop-shadow-md">
-                  {WEDDING.monogram}
-                </span>
-              </motion.button>
+                <div
+                  className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center"
+                  style={{
+                    background:
+                      "radial-gradient(circle at 35% 30%, oklch(0.82 0.13 82), var(--gold) 60%, var(--gold-hover))",
+                    boxShadow:
+                      "0 0 28px color-mix(in oklab, var(--gold) 55%, transparent), inset 0 2px 6px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.3)",
+                    border: "1px solid color-mix(in oklab, var(--gold) 70%, black)",
+                  }}
+                >
+                  <span className="font-script text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-md">
+                    {WEDDING.monogram}
+                  </span>
+                </div>
+              </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        </motion.button>
       </div>
 
       {!opened && (
         <motion.p
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
+          animate={{ opacity: 0.7 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
           className="relative z-10 mt-10 text-[10px] sm:text-xs tracking-[0.3em] text-muted-soft uppercase animate-pulse"
         >
-          Tap to open
+          Tap the envelope to open
         </motion.p>
       )}
     </section>
