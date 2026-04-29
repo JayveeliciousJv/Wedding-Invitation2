@@ -88,7 +88,7 @@ export function Venue() {
                       <MapPin className="text-gold mt-1 shrink-0" size={16} />
                       <p className="text-sm leading-relaxed">{loc.address}</p>
                     </div>
-                    
+                    <a
                       href={loc.mapsLink}
                       target="_blank"
                       rel="noopener noreferrer"
