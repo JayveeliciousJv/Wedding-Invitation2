@@ -191,14 +191,25 @@ export function Venue() {
                 />
               </div>
 
-              {/* BACK BUTTON */}
-              <button
+              {/* 🔥 IMPROVED BACK BUTTON (TOP RIGHT, MORE VISIBLE) */}
+              <motion.button
                 onClick={() => setLightbox(false)}
-                className="absolute top-4 right-4 flex items-center gap-2 bg-black/60 hover:bg-black/80 text-white text-[10px] tracking-[0.2em] uppercase px-3 py-2 rounded-full backdrop-blur-md border border-white/20 transition"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="absolute top-4 right-4 flex items-center gap-2 
+                           bg-gold text-black 
+                           text-[11px] md:text-[12px]
+                           tracking-[0.2em] uppercase font-semibold
+                           px-4 py-2.5 md:px-5 md:py-3
+                           rounded-full 
+                           shadow-lg md:shadow-glow-gold
+                           border border-gold/50
+                           hover:brightness-110 
+                           transition-all duration-200"
               >
-                <ArrowLeft size={14} />
+                <ArrowLeft size={16} />
                 Back
-              </button>
+              </motion.button>
 
               {/* BOTTOM BAR */}
               <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center bg-black/70 px-5 py-4">
