@@ -45,7 +45,7 @@ export function Venue() {
 
           <div className="grid md:grid-cols-5 gap-6 md:gap-8 items-stretch">
 
-            {/* LEFT */}
+            {/* LEFT PANEL */}
             <div className="md:col-span-2 flex flex-col gap-5">
               {locations.map((loc) => {
                 const isActive = loc.key === active;
@@ -96,20 +96,15 @@ export function Venue() {
                       <p className="text-sm">{loc.address}</p>
                     </div>
 
-                    {/* OPEN GOOGLE MAPS (OPTION 1 FIX) */}
                     <a
                       href={loc.mapsLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 
-                      bg-gradient-to-r from-gold/30 to-gold/10 
-                      hover:from-gold/40 hover:to-gold/20 
-                      border border-gold/40 rounded-full 
-                      text-[10px] uppercase tracking-[0.2em] 
-                      text-white backdrop-blur-md transition"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 border border-gold rounded-full text-[10px] uppercase tracking-[0.2em] text-gold hover:bg-gold hover:text-black transition"
                     >
                       <Navigation size={14} />
-                      Open Map
+                      Get Directions
                     </a>
                   </motion.button>
                 );
@@ -128,7 +123,6 @@ export function Venue() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    {/* IMAGE (CLICK TO EXPAND) */}
                     <button
                       onClick={() => setLightbox(true)}
                       className="absolute inset-0 w-full h-full group cursor-zoom-in"
@@ -145,14 +139,20 @@ export function Venue() {
                     <div className="absolute top-3 right-3 flex gap-2">
                       <button
                         onClick={() => setLightbox(true)}
-                        className="flex items-center gap-1.5 
-                        bg-black/60 hover:bg-black/80 
-                        text-white text-[10px] tracking-[0.2em] uppercase 
-                        px-3 py-2 rounded-full backdrop-blur-md 
-                        border border-white/20 transition"
+                        className="flex items-center gap-1.5 bg-black/60 hover:bg-black/80 text-white text-[10px] tracking-[0.2em] uppercase px-3 py-2 rounded-full backdrop-blur-md border border-white/20"
                       >
                         <ZoomIn size={12} />
                         Expand
+                      </button>
+
+                      <button
+                        onClick={() =>
+                          setActive(active === "ceremony" ? "reception" : "ceremony")
+                        }
+                        className="flex items-center gap-1.5 bg-black/60 hover:bg-black/80 text-white text-[10px] tracking-[0.2em] uppercase px-3 py-2 rounded-full backdrop-blur-md border border-white/20"
+                      >
+                        <ArrowLeft size={12} />
+                        Switch
                       </button>
                     </div>
 
@@ -185,7 +185,7 @@ export function Venue() {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative w-full max-w-5xl max-h-[90vh] rounded-2xl overflow-hidden shadow-2xl"
+              className="relative max-w-5xl w-full rounded-2xl overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
@@ -195,43 +195,33 @@ export function Venue() {
               <img
                 src={current.mapImage}
                 alt={current.place}
-                className="w-full h-full object-contain max-h-[90vh]"
+                className="w-full h-auto object-contain"
                 draggable={false}
               />
 
-              {/* BACK BUTTON (LIGHTBOX ONLY) */}
+              {/* BACK BUTTON */}
               <button
                 onClick={() => setLightbox(false)}
-                className="absolute top-4 right-4 z-20 flex items-center gap-2 
-                bg-gradient-to-r from-gold/40 to-gold/20 
-                text-white text-[10px] tracking-[0.25em] uppercase 
-                px-4 py-2 rounded-full backdrop-blur-xl 
-                border border-gold/40 shadow-lg 
-                hover:scale-105 active:scale-95 transition"
+                className="absolute top-4 left-4 flex items-center gap-2 bg-black/60 hover:bg-black/80 text-white text-[10px] tracking-[0.2em] uppercase px-3 py-2 rounded-full backdrop-blur-md border border-white/20 transition"
               >
                 <ArrowLeft size={14} />
                 Back
               </button>
 
-              {/* BOTTOM BAR (FIXED VISIBILITY) */}
-              <div className="absolute bottom-0 left-0 right-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-black/70 px-5 py-4">
+              {/* BOTTOM BAR */}
+              <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center bg-black/70 px-5 py-4">
                 <div>
                   <p className="text-[9px] uppercase text-white/60">
                     {current.label}
                   </p>
-                  <p className="text-white font-serif text-base md:text-lg">
-                    {current.place}
-                  </p>
+                  <p className="text-white font-serif">{current.place}</p>
                 </div>
 
                 <a
                   href={current.mapsLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 
-                  bg-gold/90 hover:bg-gold 
-                  text-black text-[10px] px-4 py-2 
-                  rounded-full uppercase font-semibold transition"
+                  className="flex items-center gap-2 bg-gold text-black text-[10px] px-4 py-2 rounded-full uppercase font-semibold hover:brightness-110 transition"
                 >
                   <Navigation size={13} />
                   Get Directions
