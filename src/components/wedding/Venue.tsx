@@ -96,12 +96,19 @@ export function Venue() {
                       <p className="text-sm">{loc.address}</p>
                     </div>
 
+                    {/* NORMAL BUTTON (NO GLOW) */}
                     <a
                       href={loc.mapsLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 border border-gold rounded-full text-[10px] uppercase tracking-[0.2em] text-gold hover:bg-gold hover:text-black transition"
+                      className="inline-flex items-center gap-2 mt-5 
+                                 px-5 py-2.5 md:px-6 md:py-3
+                                 border border-gold rounded-full 
+                                 text-[10px] md:text-[11px]
+                                 uppercase tracking-[0.2em] 
+                                 text-gold hover:bg-gold hover:text-black 
+                                 transition-all duration-200"
                     >
                       <Navigation size={14} />
                       Get Directions
@@ -135,7 +142,6 @@ export function Venue() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                     </button>
 
-                    {/* TOP ACTIONS */}
                     <div className="absolute top-3 right-3 flex gap-2">
                       <button
                         onClick={() => setLightbox(true)}
@@ -146,7 +152,6 @@ export function Venue() {
                       </button>
                     </div>
 
-                    {/* BOTTOM INFO */}
                     <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
                       <p className="text-[9px] tracking-[0.3em] uppercase text-white/70">
                         {current.label}
@@ -191,23 +196,23 @@ export function Venue() {
                 />
               </div>
 
-              {/* 🔥 IMPROVED BACK BUTTON (TOP RIGHT, MORE VISIBLE) */}
+              {/* BACK BUTTON (SLIGHTLY REDUCED) */}
               <motion.button
                 onClick={() => setLightbox(false)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="absolute top-4 right-4 flex items-center gap-2 
                            bg-gold text-black 
-                           text-[11px] md:text-[12px]
+                           text-[10px] md:text-[11px]
                            tracking-[0.2em] uppercase font-semibold
-                           px-4 py-2.5 md:px-5 md:py-3
+                           px-3.5 py-2 md:px-4 md:py-2.5
                            rounded-full 
-                           shadow-lg md:shadow-glow-gold
+                           shadow-md md:shadow-glow-gold
                            border border-gold/50
                            hover:brightness-110 
                            transition-all duration-200"
               >
-                <ArrowLeft size={16} />
+                <ArrowLeft size={15} />
                 Back
               </motion.button>
 
@@ -220,11 +225,48 @@ export function Venue() {
                   <p className="text-white font-serif">{current.place}</p>
                 </div>
 
+                {/* ✨ GLOW ONLY HERE (DESKTOP) */}
+                <motion.a
+                  href={current.mapsLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden md:flex items-center gap-2 
+                             bg-gold text-black 
+                             text-[11px]
+                             px-5 py-2.5
+                             rounded-full uppercase font-semibold 
+                             shadow-md hover:brightness-110 
+                             transition-all duration-200"
+                  animate={{
+                    boxShadow: [
+                      "0 0 0px rgba(212,175,55,0.0)",
+                      "0 0 14px rgba(212,175,55,0.45)",
+                      "0 0 0px rgba(212,175,55,0.0)",
+                    ],
+                    scale: [1, 1.02, 1],
+                  }}
+                  transition={{
+                    duration: 2.8,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <Navigation size={13} />
+                  Get Directions
+                </motion.a>
+
+                {/* MOBILE (NO GLOW) */}
                 <a
                   href={current.mapsLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-gold text-black text-[10px] px-4 py-2 rounded-full uppercase font-semibold hover:brightness-110 transition"
+                  className="md:hidden flex items-center gap-2 
+                             bg-gold text-black 
+                             text-[10px]
+                             px-4 py-2
+                             rounded-full uppercase font-semibold 
+                             hover:brightness-110 
+                             transition"
                 >
                   <Navigation size={13} />
                   Get Directions
