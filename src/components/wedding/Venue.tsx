@@ -47,17 +47,19 @@ export function Venue() {
                     type="button"
                     onClick={() => setActive(loc.key)}
                     whileHover={{ y: -2 }}
-                    className={`text-left rounded-2xl p-6 md:p-7 border transition-all duration-300 cursor-pointer ${
+                    className={
                       isActive
-                        ? "bg-warm-white border-gold shadow-glow-gold"
-                        : "bg-warm-white border-border hover:border-gold/50 shadow-soft"
-                    }`}
+                        ? "text-left rounded-2xl p-6 md:p-7 border transition-all duration-300 cursor-pointer bg-warm-white border-gold shadow-glow-gold"
+                        : "text-left rounded-2xl p-6 md:p-7 border transition-all duration-300 cursor-pointer bg-warm-white border-border hover:border-gold/50 shadow-soft"
+                    }
                   >
                     <div className="flex items-center gap-3 mb-3">
                       <span
-                        className={`w-10 h-10 rounded-full flex items-center justify-center border ${
-                          isActive ? "border-gold bg-gold/15" : "border-gold/30"
-                        }`}
+                        className={
+                          isActive
+                            ? "w-10 h-10 rounded-full flex items-center justify-center border border-gold bg-gold/15"
+                            : "w-10 h-10 rounded-full flex items-center justify-center border border-gold/30"
+                        }
                         style={
                           isActive
                             ? undefined
@@ -113,7 +115,6 @@ export function Venue() {
                     transition={{ duration: 0.4 }}
                     className="absolute inset-0"
                   >
-                    {/* Clickable map image → opens lightbox */}
                     <button
                       type="button"
                       onClick={() => setLightbox(true)}
@@ -136,7 +137,7 @@ export function Venue() {
                         Expand
                       </div>
 
-                      {/* Bottom bar: venue name + open map link */}
+                      {/* Bottom bar */}
                       <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between p-4 md:p-5">
                         <div>
                           <p className="text-[9px] tracking-[0.3em] uppercase text-white/70 mb-0.5">
@@ -177,7 +178,6 @@ export function Venue() {
             className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/85 backdrop-blur-sm p-4"
             onClick={() => setLightbox(false)}
           >
-            {/* Close hint */}
             <p className="text-white/50 text-[10px] tracking-[0.3em] uppercase mb-4 select-none">
               Click anywhere to close
             </p>
