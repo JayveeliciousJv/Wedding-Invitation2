@@ -194,7 +194,7 @@ export function Venue() {
               {/* BACK BUTTON */}
               <button
                 onClick={() => setLightbox(false)}
-                className="absolute top-4 left-4 flex items-center gap-2 bg-black/60 hover:bg-black/80 text-white text-[10px] tracking-[0.2em] uppercase px-3 py-2 rounded-full backdrop-blur-md border border-white/20 transition"
+                className="absolute top-4 right-4 flex items-center gap-2 bg-black/60 hover:bg-black/80 text-white text-[10px] tracking-[0.2em] uppercase px-3 py-2 rounded-full backdrop-blur-md border border-white/20 transition"
               >
                 <ArrowLeft size={14} />
                 Back
