@@ -7,6 +7,7 @@ import {
   GlassWater,
   ExternalLink,
   ArrowLeft,
+  ZoomIn,
 } from "lucide-react";
 import { SectionTitle } from "./SectionTitle";
 import { WEDDING } from "@/lib/wedding-config";
@@ -34,9 +35,6 @@ export function Venue() {
 
   const current = locations.find((l) => l.key === active)!;
 
-  const openMap = () => setLightbox(true);
-  const closeMap = () => setLightbox(false);
-
   return (
     <>
       <section
@@ -48,7 +46,7 @@ export function Venue() {
 
           <div className="grid md:grid-cols-5 gap-6 md:gap-8 items-stretch">
 
-            {/* LEFT CARDS */}
+            {/* LEFT */}
             <div className="md:col-span-2 flex flex-col gap-5">
               {locations.map((loc) => {
                 const isActive = loc.key === active;
@@ -126,9 +124,8 @@ export function Venue() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    {/* MAP IMAGE */}
                     <button
-                      onClick={openMap}
+                      onClick={() => setLightbox(true)}
                       className="absolute inset-0 w-full h-full group cursor-zoom-in"
                     >
                       <img
@@ -138,23 +135,28 @@ export function Venue() {
                       />
 
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-
-                      <div className="absolute top-3 left-3 bg-black/60 text-white text-[10px] px-3 py-1 rounded-full uppercase tracking-[0.2em]">
-                        Tap to expand
-                      </div>
                     </button>
 
-                    {/* TOP RIGHT BUTTON */}
-                    <div className="absolute top-3 right-3">
-                      <a
-                        href={current.mapsLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 bg-gold text-black text-[10px] px-3 py-2 rounded-full uppercase font-semibold hover:brightness-110"
+                    {/* TOP ACTIONS */}
+                    <div className="absolute top-3 right-3 flex gap-2">
+
+                      {/* EXPAND */}
+                      <button
+                        onClick={() => setLightbox(true)}
+                        className="flex items-center gap-1.5 bg-black/60 hover:bg-black/80 text-white text-[10px] tracking-[0.2em] uppercase px-3 py-2 rounded-full backdrop-blur-md border border-white/20"
                       >
-                        <ExternalLink size={12} />
-                        Open Map
-                      </a>
+                        <ZoomIn size={12} />
+                        Expand
+                      </button>
+
+                      {/* BACK (REPLACES OPEN MAP STYLE SLOT) */}
+                      <button
+                        onClick={() => setActive(active === "ceremony" ? "reception" : "ceremony")}
+                        className="flex items-center gap-1.5 bg-black/60 hover:bg-black/80 text-white text-[10px] tracking-[0.2em] uppercase px-3 py-2 rounded-full backdrop-blur-md border border-white/20"
+                      >
+                        <ArrowLeft size={12} />
+                        Back
+                      </button>
                     </div>
 
                     {/* BOTTOM INFO */}
@@ -168,6 +170,7 @@ export function Venue() {
                     </div>
                   </motion.div>
                 </AnimatePresence>
+
               </div>
             </div>
           </div>
@@ -179,7 +182,7 @@ export function Venue() {
         {lightbox && (
           <motion.div
             className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-            onClick={closeMap}
+            onClick={() => setLightbox(false)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -191,15 +194,6 @@ export function Venue() {
               animate={{ scale: 1 }}
               exit={{ scale: 0.9 }}
             >
-              {/* BACK BUTTON */}
-              <button
-                onClick={closeMap}
-                className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-black/60 text-white text-[10px] uppercase px-3 py-2 rounded-full"
-              >
-                <ArrowLeft size={14} />
-                Back
-              </button>
-
               <img
                 src={current.mapImage}
                 alt={current.place}
@@ -212,9 +206,7 @@ export function Venue() {
                   <p className="text-[9px] uppercase text-white/60">
                     {current.label}
                   </p>
-                  <p className="text-white font-serif">
-                    {current.place}
-                  </p>
+                  <p className="text-white font-serif">{current.place}</p>
                 </div>
 
                 <a
