@@ -75,6 +75,12 @@ export function Venue() {
                       <p className="text-[10px] tracking-[0.3em] uppercase text-gold">
                         {loc.label}
                       </p>
+
+                      {isActive && (
+                        <span className="ml-auto text-[9px] tracking-[0.3em] uppercase text-gold/80">
+                          Showing on map
+                        </span>
+                      )}
                     </div>
 
                     <h3 className="font-serif text-xl md:text-2xl">
@@ -90,16 +96,20 @@ export function Venue() {
                       <p className="text-sm">{loc.address}</p>
                     </div>
 
+                    {/* OPEN GOOGLE MAPS (OPTION 1 FIX) */}
                     <a
                       href={loc.mapsLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 mt-5 px-5 py-2.5
-                                 border border-gold rounded-full text-[10px] uppercase
-                                 tracking-[0.2em] text-gold hover:bg-gold hover:text-black transition"
+                      className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 
+                      bg-gradient-to-r from-gold/30 to-gold/10 
+                      hover:from-gold/40 hover:to-gold/20 
+                      border border-gold/40 rounded-full 
+                      text-[10px] uppercase tracking-[0.2em] 
+                      text-white backdrop-blur-md transition"
                     >
                       <Navigation size={14} />
-                      Get Directions
+                      Open Map
                     </a>
                   </motion.button>
                 );
@@ -118,28 +128,28 @@ export function Venue() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    {/* IMAGE */}
+                    {/* IMAGE (CLICK TO EXPAND) */}
                     <button
                       onClick={() => setLightbox(true)}
-                      className="absolute inset-0 w-full h-full cursor-zoom-in"
+                      className="absolute inset-0 w-full h-full group cursor-zoom-in"
                     >
                       <img
                         src={current.mapImage}
                         alt={current.place}
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                     </button>
 
                     {/* TOP ACTIONS */}
                     <div className="absolute top-3 right-3 flex gap-2">
-
-                      {/* EXPAND */}
                       <button
                         onClick={() => setLightbox(true)}
-                        className="flex items-center gap-1.5 bg-black/60 hover:bg-black/80 text-white
-                                   text-[10px] tracking-[0.2em] uppercase px-3 py-2 rounded-full
-                                   backdrop-blur-md border border-white/20"
+                        className="flex items-center gap-1.5 
+                        bg-black/60 hover:bg-black/80 
+                        text-white text-[10px] tracking-[0.2em] uppercase 
+                        px-3 py-2 rounded-full backdrop-blur-md 
+                        border border-white/20 transition"
                       >
                         <ZoomIn size={12} />
                         Expand
@@ -181,61 +191,52 @@ export function Venue() {
               animate={{ scale: 1 }}
               exit={{ scale: 0.9 }}
             >
-
               {/* IMAGE */}
-              <div
-                className="relative cursor-zoom-out"
+              <img
+                src={current.mapImage}
+                alt={current.place}
+                className="w-full h-full object-contain max-h-[90vh]"
+                draggable={false}
+              />
+
+              {/* BACK BUTTON (LIGHTBOX ONLY) */}
+              <button
                 onClick={() => setLightbox(false)}
+                className="absolute top-4 right-4 z-20 flex items-center gap-2 
+                bg-gradient-to-r from-gold/40 to-gold/20 
+                text-white text-[10px] tracking-[0.25em] uppercase 
+                px-4 py-2 rounded-full backdrop-blur-xl 
+                border border-gold/40 shadow-lg 
+                hover:scale-105 active:scale-95 transition"
               >
-                <img
-                  src={current.mapImage}
-                  alt={current.place}
-                  className="w-full h-auto max-h-[75vh] object-contain"
-                  draggable={false}
-                />
-              </div>
+                <ArrowLeft size={14} />
+                Back
+              </button>
 
-              {/* TOP ACTIONS */}
-              <div className="absolute top-4 right-4 flex items-center gap-2 z-20">
+              {/* BOTTOM BAR (FIXED VISIBILITY) */}
+              <div className="absolute bottom-0 left-0 right-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-black/70 px-5 py-4">
+                <div>
+                  <p className="text-[9px] uppercase text-white/60">
+                    {current.label}
+                  </p>
+                  <p className="text-white font-serif text-base md:text-lg">
+                    {current.place}
+                  </p>
+                </div>
 
-                {/* BACK BUTTON */}
-                <button
-                  onClick={() => setLightbox(false)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full
-                             bg-gradient-to-r from-gold/30 to-white/10
-                             text-white text-[10px] tracking-[0.2em] uppercase
-                             backdrop-blur-xl border border-gold/40
-                             shadow-[0_0_20px_rgba(212,175,55,0.25)]
-                             hover:scale-105 transition"
-                >
-                  <ArrowLeft size={14} />
-                  Back
-                </button>
-
-                {/* GET DIRECTIONS */}
                 <a
                   href={current.mapsLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-gold text-black
-                             text-[10px] px-4 py-2 rounded-full uppercase font-semibold
-                             hover:brightness-110 transition"
+                  className="flex items-center gap-2 
+                  bg-gold/90 hover:bg-gold 
+                  text-black text-[10px] px-4 py-2 
+                  rounded-full uppercase font-semibold transition"
                 >
                   <Navigation size={13} />
                   Get Directions
                 </a>
               </div>
-
-              {/* BOTTOM INFO */}
-              <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center bg-black/70 px-5 py-4">
-                <div>
-                  <p className="text-[9px] uppercase text-white/60">
-                    {current.label}
-                  </p>
-                  <p className="text-white font-serif">{current.place}</p>
-                </div>
-              </div>
-
             </motion.div>
           </motion.div>
         )}
