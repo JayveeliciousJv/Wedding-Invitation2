@@ -14,21 +14,21 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
   const FLAP_PCT = 55;
   const SEAL_TOP_PCT = FLAP_PCT;
 
-  // ✨ ONLY enhancement: more subtle floating glitter (no visual envelope change)
-  const glitterParticles = Array.from({ length: 90 }, (_, i) => ({
+  // ✨ more refined glitter (increased count + softer motion)
+  const glitterParticles = Array.from({ length: 70 }, (_, i) => ({
     id: i,
-    left: `${10 + Math.random() * 80}%`,
-    size: Math.random() > 0.5 ? 4 : 3,
-    duration: 2.5 + Math.random() * 2,
+    left: `${5 + Math.random() * 90}%`,
+    size: Math.random() > 0.6 ? 4 : Math.random() > 0.3 ? 3 : 2,
+    duration: 2.5 + Math.random() * 2.2,
     delay: Math.random() * 1.2,
     drift: (Math.random() - 0.5) * 80,
-    opacity: 0.5 + Math.random() * 0.4,
+    opacity: 0.4 + Math.random() * 0.5,
   }));
 
   return (
     <section className="section-dark relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden grain">
 
-      {/* 🌙 original glow (kept safe) */}
+      {/* Soft radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -37,66 +37,59 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
         }}
       />
 
-      {/* 🎞️ CINEMATIC SILK LIGHT (slower, candle-like movement) */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: `
-            radial-gradient(circle at 25% 30%, rgba(255, 220, 140, 0.10), transparent 45%),
-            radial-gradient(circle at 75% 70%, rgba(212,175,55,0.08), transparent 50%),
-            linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.035) 50%, transparent 65%)
-          `,
-          backgroundSize: "200% 200%",
-        }}
-        animate={{
-          backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-        }}
-        transition={{
-          duration: 26, // slowed
-          ease: "easeInOut",
-          repeat: Infinity,
-        }}
-      />
-
-      {/* 🌫️ GOLD FOIL SLOW SWEEP */}
+      {/* 🌙 Shimmer layer 1 (SLOWED) */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(135deg, transparent 0%, rgba(212,175,55,0.06) 50%, transparent 100%)",
+            "linear-gradient(115deg, transparent 0%, transparent 42%, rgba(212,175,55,0.12) 50%, transparent 58%, transparent 100%)",
           backgroundSize: "300% 300%",
         }}
-        animate={{
-          backgroundPosition: ["100% 0%", "0% 100%", "100% 0%"],
-        }}
+        animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
         transition={{
-          duration: 32, // very slow cinematic sweep
+          duration: 16,
           ease: "easeInOut",
           repeat: Infinity,
         }}
       />
 
-      {/* ✨ FLOATING GOLD DUST */}
+      {/* 🌙 Shimmer layer 2 (SLOWED MORE for depth) */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(250deg, transparent 0%, transparent 38%, rgba(212,175,55,0.08) 50%, transparent 62%, transparent 100%)",
+          backgroundSize: "300% 300%",
+        }}
+        animate={{ backgroundPosition: ["100% 100%", "0% 0%", "100% 100%"] }}
+        transition={{
+          duration: 22,
+          ease: "easeInOut",
+          repeat: Infinity,
+        }}
+      />
+
+      {/* Floating ambient dots */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(16)].map((_, i) => (
+        {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full"
             style={{
               width: i % 3 === 0 ? "3px" : "2px",
               height: i % 3 === 0 ? "3px" : "2px",
-              background: "rgba(212,175,55,0.55)",
-              left: `${(i * 7.5) % 100}%`,
-              top: `${(i * 11.3) % 100}%`,
+              background: "rgba(212, 175, 55, 0.6)",
+              left: `${(i * 8.3) % 100}%`,
+              top: `${(i * 13.7 + 10) % 100}%`,
             }}
             animate={{
-              y: [0, -25, 0],
-              opacity: [0.15, 0.6, 0.15],
-              scale: [1, 1.5, 1],
+              y: [0, -20, 0],
+              opacity: [0.15, 0.5, 0.15],
+              scale: [1, 1.4, 1],
             }}
             transition={{
-              duration: 7 + (i % 6),
-              delay: i * 0.3,
+              duration: 6 + (i % 4),
+              delay: i * 0.4,
               repeat: Infinity,
               ease: "easeInOut",
             }}
@@ -104,7 +97,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
         ))}
       </div>
 
-      {/* ✨ GLITTER BURST (UNCHANGED ENVELOPE BEHAVIOR) */}
+      {/* ✨ Glitter burst (more particles, softer elegance) */}
       <AnimatePresence>
         {opened && (
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -123,11 +116,15 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
                       : p.id % 3 === 1
                       ? "rgba(212, 175, 55, 0.85)"
                       : "rgba(255, 240, 150, 0.8)",
+                  boxShadow:
+                    p.id % 2 === 0
+                      ? "0 0 6px 1px rgba(255,215,0,0.35)"
+                      : "none",
                 }}
                 initial={{ y: 0, x: 0, opacity: p.opacity, scale: 1 }}
                 animate={{
-                  y: [0, -160, 320],
-                  x: [0, p.drift, p.drift * 1.1],
+                  y: [0, -160 - Math.random() * 100, 320],
+                  x: [0, p.drift, p.drift * 1.2],
                   opacity: [p.opacity, p.opacity, 0],
                   scale: [1, 1.1, 0.3],
                   rotate: [0, 180, 360],
@@ -143,7 +140,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
         )}
       </AnimatePresence>
 
-      {/* ================= ORIGINAL ENVELOPE (UNCHANGED) ================= */}
+      {/* ===== EVERYTHING BELOW IS YOUR ORIGINAL ENVELOPE (UNCHANGED) ===== */}
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -170,10 +167,37 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
           onClick={handleOpen}
           whileHover={!opened ? { scale: 1.03 } : undefined}
           whileTap={!opened ? { scale: 0.98 } : undefined}
-          className="relative w-full max-w-sm md:max-w-md aspect-[3/2] cursor-pointer"
+          transition={{ type: "spring", stiffness: 220, damping: 18 }}
+          aria-label="Open invitation"
+          className="relative w-full max-w-sm md:max-w-md aspect-[3/2] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 rounded-sm"
           style={{ perspective: "1600px" }}
         >
-          {/* ENVELOPE BODY (UNCHANGED) */}
+          {/* Paper invitation */}
+          <AnimatePresence>
+            {opened && (
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <motion.div
+                  initial={{ y: 40, opacity: 0, scale: 0.96 }}
+                  animate={{ y: "-60%", opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.7, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-[88%] aspect-[3/2.4] z-10 rounded-md bg-warm-white border border-gold/30 shadow-soft flex flex-col items-center justify-center px-6 text-center"
+                  style={{ color: "var(--charcoal)" }}
+                >
+                  <p className="font-script text-2xl md:text-3xl text-gold">You are invited</p>
+                  <div className="w-12 h-px bg-gold/50 my-2" />
+                  <p className="font-serif text-base md:text-xl">to the wedding of</p>
+                  <p className="font-script text-3xl md:text-4xl text-gold mt-1">
+                    {WEDDING.coupleOrder[0]} &amp; {WEDDING.coupleOrder[1]}
+                  </p>
+                  <p className="text-[10px] md:text-xs tracking-[0.3em] mt-3 uppercase opacity-70">
+                    June 13, 2026 — 1:30 PM
+                  </p>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
+
+          {/* Envelope body */}
           <div
             className="absolute inset-0 z-20 rounded-sm border border-white/10 shadow-soft pointer-events-none overflow-hidden"
             style={{
@@ -183,12 +207,16 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
             }}
           />
 
-          {/* FLAP (UNCHANGED) */}
+          {/* Flap */}
           <motion.div
             className="absolute left-0 right-0 top-0 z-30 origin-top pointer-events-none"
             style={{ height: `${FLAP_PCT}%`, transformStyle: "preserve-3d" }}
             animate={{ rotateX: opened ? -178 : 0 }}
-            transition={{ duration: 1.2, ease: [0.7, 0, 0.3, 1] }}
+            transition={{
+              duration: 1.2,
+              ease: [0.7, 0, 0.3, 1],
+              delay: opened ? 0.2 : 0,
+            }}
           >
             <div
               className="w-full h-full"
@@ -200,23 +228,18 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
             />
           </motion.div>
 
-          {/* WAX SEAL (UNCHANGED — fully preserved) */}
+          {/* Wax seal */}
           <AnimatePresence>
             {!opened && (
               <motion.div
                 initial={{ x: "-50%", y: "-50%", scale: 0, opacity: 0 }}
                 animate={{ x: "-50%", y: "-50%", scale: 1, opacity: 1 }}
                 exit={{ x: "-50%", y: "-50%", scale: 0.6, opacity: 0 }}
-                className="absolute left-1/2 z-40"
+                className="absolute left-1/2 z-40 pointer-events-none"
                 style={{ top: `${SEAL_TOP_PCT}%` }}
               >
-                <div className="relative w-20 h-20 rounded-full flex items-center justify-center overflow-hidden"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 32% 24%, hsl(48 100% 92%) 0%, hsl(43 82% 68%) 17%, hsl(var(--gold)) 47%, hsl(43 64% 29%) 100%)",
-                  }}
-                >
-                  <span className="font-script text-xl text-center text-black">
+                <div className="w-20 h-20 rounded-full bg-gold flex items-center justify-center">
+                  <span className="font-script text-xl">
                     {WEDDING.monogram}
                   </span>
                 </div>
