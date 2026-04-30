@@ -31,7 +31,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(115deg, transparent 30%, color-mix(in oklab, var(--gold) 8%, transparent) 50%, transparent 70%)",
+            "linear-gradient(115deg, transparent 30%, rgba(212, 175, 55, 0.12) 50%, transparent 70%)",
           backgroundSize: "200% 200%",
           animation: "goldShimmer 6s ease-in-out infinite",
         }}
@@ -42,7 +42,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(250deg, transparent 25%, color-mix(in oklab, var(--gold) 5%, transparent) 50%, transparent 75%)",
+            "linear-gradient(250deg, transparent 25%, rgba(212, 175, 55, 0.07) 50%, transparent 75%)",
           backgroundSize: "200% 200%",
           animation: "goldShimmer 9s ease-in-out infinite reverse",
         }}
@@ -57,8 +57,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
             style={{
               width: i % 3 === 0 ? "3px" : "2px",
               height: i % 3 === 0 ? "3px" : "2px",
-              background: "var(--gold)",
-              opacity: 0.25,
+              background: "rgba(212, 175, 55, 0.6)",
               left: `${(i * 8.3) % 100}%`,
               top: `${(i * 13.7 + 10) % 100}%`,
               animation: `floatDot ${5 + (i % 4)}s ease-in-out ${i * 0.4}s infinite alternate`,
@@ -99,7 +98,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
           className="relative w-full max-w-sm md:max-w-md aspect-[3/2] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 rounded-sm"
           style={{ perspective: "1600px" }}
         >
-          {/* Paper invitation */}
+          {/* Paper invitation — slides up on open */}
           <AnimatePresence>
             {opened && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -142,7 +141,9 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
             />
             <div
               className="absolute left-0 right-0 bottom-0 h-1/2"
-              style={{ background: "linear-gradient(to top, rgba(0,0,0,0.18), transparent)" }}
+              style={{
+                background: "linear-gradient(to top, rgba(0,0,0,0.18), transparent)",
+              }}
             />
             <div className="absolute top-3 left-0 right-0 text-center">
               <p className="text-[9px] sm:text-[10px] tracking-[0.5em] text-gold/80 uppercase">
@@ -169,7 +170,8 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
             <div
               className="w-full h-full"
               style={{
-                background: "linear-gradient(to bottom, oklch(0.50 0.001 60), oklch(0.40 0.001 60))",
+                background:
+                  "linear-gradient(to bottom, oklch(0.50 0.001 60), oklch(0.40 0.001 60))",
                 clipPath: "polygon(0 0, 100% 0, 50% 100%)",
                 backfaceVisibility: "hidden",
                 boxShadow: "inset 0 -12px 25px -10px rgba(0,0,0,0.55)",
