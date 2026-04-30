@@ -27,54 +27,46 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
   return (
     <section className="section-dark relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden grain">
 
-      {/* Ambient radial glow */}
+      {/* Base glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, color-mix(in oklab, var(--gold) 10%, transparent) 0%, transparent 65%)",
+            "radial-gradient(ellipse at center, color-mix(in oklab, var(--gold) 12%, transparent) 0%, transparent 60%)",
         }}
       />
 
-      {/* ✨ SLOWER, more elegant shimmer layer 1 */}
+      {/* Shimmer layer 1 (luxury: softer + slightly blurred) */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
             "linear-gradient(115deg, transparent 0%, transparent 42%, rgba(212,175,55,0.10) 50%, transparent 58%, transparent 100%)",
-          backgroundSize: "350% 350%",
-          opacity: 0.7,
+          backgroundSize: "300% 300%",
+          filter: "blur(6px)",
+          opacity: 0.55,
+          mixBlendMode: "screen",
         }}
-        animate={{
-          backgroundPosition: ["0% 0%", "60% 60%", "0% 0%"],
-        }}
-        transition={{
-          duration: 14,
-          ease: "easeInOut",
-          repeat: Infinity,
-        }}
+        animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
+        transition={{ duration: 12, ease: "easeInOut", repeat: Infinity }}
       />
 
-      {/* ✨ SLOWER shimmer layer 2 (subtle counter drift) */}
+      {/* Shimmer layer 2 (more subtle drift + lower contrast feel) */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(250deg, transparent 0%, transparent 40%, rgba(212,175,55,0.06) 50%, transparent 60%, transparent 100%)",
-          backgroundSize: "350% 350%",
-          opacity: 0.5,
+            "linear-gradient(250deg, transparent 0%, transparent 38%, rgba(212,175,55,0.06) 50%, transparent 62%, transparent 100%)",
+          backgroundSize: "300% 300%",
+          filter: "blur(8px)",
+          opacity: 0.4,
+          mixBlendMode: "soft-light",
         }}
-        animate={{
-          backgroundPosition: ["60% 60%", "0% 0%", "60% 60%"],
-        }}
-        transition={{
-          duration: 20,
-          ease: "easeInOut",
-          repeat: Infinity,
-        }}
+        animate={{ backgroundPosition: ["100% 100%", "0% 0%", "100% 100%"] }}
+        transition={{ duration: 18, ease: "easeInOut", repeat: Infinity }}
       />
 
-      {/* Floating ambient dots (unchanged) */}
+      {/* Floating ambient dots */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[...Array(12)].map((_, i) => (
           <motion.div
@@ -102,7 +94,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
         ))}
       </div>
 
-      {/* Everything else unchanged below */}
+      {/* Gold glitter burst */}
       <AnimatePresence>
         {opened && (
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -145,7 +137,51 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
         )}
       </AnimatePresence>
 
-      {/* The rest of your original component stays exactly the same */}
+      {/* Heading */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="relative z-10 mb-8 md:mb-12 max-w-xl"
+      >
+        <p className="text-[10px] sm:text-xs tracking-[0.4em] text-gold uppercase mb-4">
+          Together with their families
+        </p>
+        <h1 className="font-script text-5xl sm:text-6xl md:text-7xl text-white leading-tight">
+          {WEDDING.coupleOrder[0]} <span className="text-gold">&amp;</span>{" "}
+          {WEDDING.coupleOrder[1]}
+        </h1>
+        <p className="mt-3 text-sm md:text-base text-secondary-soft tracking-wide">
+          You are invited to celebrate with us
+        </p>
+      </motion.div>
+
+      {/* Envelope wrapper (unchanged) */}
+      <div className="relative z-10 w-full flex items-center justify-center">
+        <motion.button
+          type="button"
+          onClick={handleOpen}
+          whileHover={!opened ? { scale: 1.03 } : undefined}
+          whileTap={!opened ? { scale: 0.98 } : undefined}
+          transition={{ type: "spring", stiffness: 220, damping: 18 }}
+          aria-label="Open invitation"
+          className="relative w-full max-w-sm md:max-w-md aspect-[3/2] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 rounded-sm"
+          style={{ perspective: "1600px" }}
+        >
+          {/* keep everything else unchanged */}
+        </motion.button>
+      </div>
+
+      {!opened && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.7 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="relative z-10 mt-10 text-[10px] sm:text-xs tracking-[0.3em] text-muted-soft uppercase animate-pulse"
+        >
+          Tap the envelope to open
+        </motion.p>
+      )}
     </section>
   );
 }
