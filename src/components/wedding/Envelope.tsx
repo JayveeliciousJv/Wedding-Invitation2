@@ -15,37 +15,45 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
   const SEAL_TOP_PCT = FLAP_PCT;
 
   return (
-    <section className="section-dark relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+    <section className="section-dark relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden grain">
 
-      {/* ✨ PREMIUM GOLD SWEEP BACKGROUND */}
+      {/* ✨ LUXURY SHIMMER BACKGROUND */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Base gold tone */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 opacity-[0.12]"
           style={{
-            background: `
-              radial-gradient(circle at 20% 20%, rgba(212,175,55,0.06), transparent 40%),
-              radial-gradient(circle at 80% 70%, rgba(212,175,55,0.05), transparent 50%),
-              #1a1a1a
-            `
+            background:
+              "linear-gradient(120deg, #0b0b0b 30%, #3a2a00 45%, #c9a227 50%, #3a2a00 55%, #0b0b0b 70%)",
           }}
         />
+
+        {/* Slow shimmer */}
         <motion.div
           className="absolute inset-0"
           style={{
-            background: `
-              linear-gradient(
-                120deg,
-                transparent 20%,
-                rgba(212,175,55,0.08) 40%,
-                rgba(212,175,55,0.18) 50%,
-                rgba(212,175,55,0.08) 60%,
-                transparent 80%
-              )
-            `,
+            background:
+              "linear-gradient(120deg, transparent 40%, rgba(212,175,55,0.22) 50%, transparent 60%)",
             backgroundSize: "200% 200%",
+            mixBlendMode: "overlay",
           }}
-          animate={{ backgroundPosition: ["0% 50%", "200% 50%"] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          animate={{
+            backgroundPosition: ["0% 50%", "100% 50%"],
+          }}
+          transition={{
+            duration: 9,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+
+        {/* Soft radial glow */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(212,175,55,0.10) 0%, transparent 65%)",
+          }}
         />
       </div>
 
@@ -54,129 +62,152 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="relative z-10 mb-10 max-w-xl"
+        className="relative z-10 mb-8 md:mb-12 max-w-xl"
       >
-        <p className="text-xs tracking-[0.4em] text-gold uppercase mb-4">
+        <p className="text-[10px] sm:text-xs tracking-[0.4em] text-gold uppercase mb-4">
           Together with their families
         </p>
-
-        <h1 className="font-script text-6xl text-white">
-          {WEDDING.coupleOrder[0]} <span className="text-gold">&amp;</span>{" "}
+        <h1 className="font-script text-5xl sm:text-6xl md:text-7xl text-white leading-tight">
+          {WEDDING.coupleOrder[0]}{" "}
+          <span className="text-gold">&amp;</span>{" "}
           {WEDDING.coupleOrder[1]}
         </h1>
-
-        <p className="mt-3 text-sm text-secondary-soft tracking-wide">
+        <p className="mt-3 text-sm md:text-base text-secondary-soft tracking-wide">
           You are invited to celebrate with us
         </p>
       </motion.div>
 
       {/* Envelope */}
-      <div className="relative z-10 w-full flex justify-center">
+      <div className="relative z-10 w-full flex items-center justify-center">
         <motion.button
+          type="button"
           onClick={handleOpen}
-          className="relative w-full max-w-md aspect-[3/2]"
+          whileHover={!opened ? { scale: 1.03 } : undefined}
+          whileTap={!opened ? { scale: 0.98 } : undefined}
+          transition={{ type: "spring", stiffness: 220, damping: 18 }}
+          aria-label="Open invitation"
+          className="relative w-full max-w-sm md:max-w-md aspect-[3/2] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 rounded-sm"
           style={{ perspective: "1600px" }}
         >
-
-          {/* Invitation card */}
+          {/* Invitation Paper */}
           <AnimatePresence>
             {opened && (
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <motion.div
-                  initial={{ y: 40, opacity: 0 }}
-                  animate={{ y: "-60%", opacity: 1 }}
-                  transition={{ delay: 0.7, duration: 1.2 }}
-                  className="w-[88%] aspect-[3/2.4] bg-white rounded-md shadow-xl flex flex-col items-center justify-center"
+                  initial={{ y: 40, opacity: 0, scale: 0.96 }}
+                  animate={{ y: "-60%", opacity: 1, scale: 1 }}
+                  transition={{
+                    delay: 0.7,
+                    duration: 1.2,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="w-[88%] aspect-[3/2.4] z-10 rounded-md bg-warm-white border border-gold/30 shadow-soft flex flex-col items-center justify-center px-6 text-center"
+                  style={{ color: "var(--charcoal)" }}
                 >
-                  <p className="font-script text-3xl text-gold">
+                  <p className="font-script text-2xl md:text-3xl text-gold">
                     You are invited
                   </p>
-                  <p className="mt-2 text-lg">to the wedding of</p>
-                  <p className="font-script text-4xl text-gold mt-2">
-                    {WEDDING.coupleOrder[0]} &amp; {WEDDING.coupleOrder[1]}
+                  <div className="w-12 h-px bg-gold/50 my-2" />
+                  <p className="font-serif text-base md:text-xl">
+                    to the wedding of
+                  </p>
+                  <p className="font-script text-3xl md:text-4xl text-gold mt-1">
+                    {WEDDING.coupleOrder[0]} &amp;{" "}
+                    {WEDDING.coupleOrder[1]}
+                  </p>
+                  <p className="text-[10px] md:text-xs tracking-[0.3em] mt-3 uppercase opacity-70">
+                    June 13, 2026 — 1:30 PM
                   </p>
                 </motion.div>
               </div>
             )}
           </AnimatePresence>
 
-          {/* Envelope body */}
-          <div className="absolute inset-0 bg-[#2a2a2a] rounded-sm shadow-2xl" />
+          {/* Envelope Body */}
+          <div
+            className="absolute inset-0 z-20 rounded-sm border border-white/10 shadow-soft pointer-events-none overflow-hidden"
+            style={{
+              backgroundColor: "var(--charcoal-2)",
+              boxShadow:
+                "inset 0 0 40px rgba(0,0,0,0.45), 0 20px 40px -20px rgba(0,0,0,0.6)",
+            }}
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to top right, transparent 49.7%, rgba(255,255,255,0.05) 49.85%, rgba(255,255,255,0.05) 50.15%, transparent 50.3%), linear-gradient(to top left, transparent 49.7%, rgba(255,255,255,0.05) 49.85%, rgba(255,255,255,0.05) 50.15%, transparent 50.3%)",
+              }}
+            />
+            <div
+              className="absolute left-0 right-0 bottom-0 h-1/2"
+              style={{
+                background:
+                  "linear-gradient(to top, rgba(0,0,0,0.18), transparent)",
+              }}
+            />
+            <div className="absolute top-3 left-0 right-0 text-center">
+              <p className="text-[9px] sm:text-[10px] tracking-[0.5em] text-gold/80 uppercase">
+                Wedding Invitation
+              </p>
+            </div>
+          </div>
 
           {/* Flap */}
           <motion.div
-            className="absolute top-0 left-0 right-0 origin-top"
-            style={{
-              height: `${FLAP_PCT}%`,
-              clipPath: "polygon(0 0, 100% 0, 50% 100%)",
-              background:
-                "linear-gradient(to bottom, #444, #222)"
-            }}
+            className="absolute left-0 right-0 top-0 z-30 origin-top pointer-events-none"
+            style={{ height: `${FLAP_PCT}%`, transformStyle: "preserve-3d" }}
             animate={{ rotateX: opened ? -178 : 0 }}
-            transition={{ duration: 1.2 }}
-          />
+            transition={{
+              duration: 1.2,
+              ease: [0.7, 0, 0.3, 1],
+              delay: opened ? 0.2 : 0,
+            }}
+          >
+            <div
+              className="w-full h-full"
+              style={{
+                background:
+                  "linear-gradient(to bottom, oklch(0.50 0.001 60), oklch(0.40 0.001 60))",
+                clipPath: "polygon(0 0, 100% 0, 50% 100%)",
+                backfaceVisibility: "hidden",
+                boxShadow: "inset 0 -12px 25px -10px rgba(0,0,0,0.55)",
+                borderTop: "1px solid rgba(255,255,255,0.08)",
+              }}
+            />
+          </motion.div>
 
-          {/* 🔴 REALISTIC WAX SEAL */}
+          {/* Wax Seal */}
           <AnimatePresence>
             {!opened && (
               <motion.div
-                className="absolute left-1/2 z-40"
+                initial={{ x: "-50%", y: "-50%", scale: 0, opacity: 0 }}
+                animate={{ x: "-50%", y: "-50%", scale: 1, opacity: 1 }}
+                exit={{ x: "-50%", y: "-50%", scale: 0.6, opacity: 0 }}
+                transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+                className="absolute left-1/2 z-40 pointer-events-none"
                 style={{ top: `${SEAL_TOP_PCT}%` }}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.6, opacity: 0 }}
               >
-                <motion.div
-                  className="relative w-24 h-24 flex items-center justify-center"
-                  style={{
-                    transform: "translate(-50%, -50%)",
-                    clipPath:
-                      "polygon(50% 0%, 90% 12%, 100% 50%, 88% 90%, 50% 100%, 12% 88%, 0% 50%, 10% 12%)",
-                    background: `
-                      radial-gradient(circle at 30% 25%, rgba(255,255,255,0.7), transparent 35%),
-                      radial-gradient(circle at 70% 75%, rgba(0,0,0,0.4), transparent 60%),
-                      radial-gradient(circle, #f5e6a6, #d4af37, #7a5a00)
-                    `,
-                    boxShadow:
-                      "0 10px 20px rgba(0,0,0,0.5), inset 0 3px 6px rgba(255,255,255,0.4), inset 0 -5px 10px rgba(0,0,0,0.6)",
-                  }}
-                  animate={{
-                    boxShadow: [
-                      "0 0 18px rgba(212,175,55,0.4)",
-                      "0 0 28px rgba(212,175,55,0.7)",
-                      "0 0 18px rgba(212,175,55,0.4)"
-                    ],
-                    rotate: [0, 1, -1, 0]
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  {/* Monogram */}
-                  <span
-                    className="text-4xl font-script"
-                    style={{
-                      color: "#3a2b00",
-                      textShadow:
-                        "0 2px 2px rgba(255,255,255,0.5), 0 -2px 3px rgba(0,0,0,0.7)"
-                    }}
-                  >
+                <div className="w-20 h-20 rounded-full bg-gold flex items-center justify-center shadow-lg">
+                  <span className="font-script text-3xl text-black">
                     {WEDDING.monogram}
                   </span>
-                </motion.div>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
-
         </motion.button>
       </div>
 
       {!opened && (
-        <p className="mt-10 text-xs tracking-[0.3em] text-muted-soft uppercase animate-pulse">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.7 }}
+          transition={{ delay: 1.2 }}
+          className="relative z-10 mt-10 text-xs tracking-[0.3em] text-muted-soft uppercase animate-pulse"
+        >
           Tap the envelope to open
-        </p>
+        </motion.p>
       )}
     </section>
   );
