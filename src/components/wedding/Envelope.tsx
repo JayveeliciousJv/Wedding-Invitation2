@@ -16,43 +16,43 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
 
   return (
     <section className="section-dark relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden grain">
-
-      {/* ✨ LUXURY SHIMMER BACKGROUND */}
+      
+      {/* ✨ GOLD SHIMMER BACKGROUND */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Base gold tone */}
+        
+        {/* Base gold gradient texture */}
         <div
-          className="absolute inset-0 opacity-[0.12]"
+          className="absolute inset-0 opacity-[0.15]"
           style={{
             background:
-              "linear-gradient(120deg, #0b0b0b 30%, #3a2a00 45%, #c9a227 50%, #3a2a00 55%, #0b0b0b 70%)",
+              "linear-gradient(120deg, #1a1a1a 30%, #3a2a00 45%, #d4af37 50%, #3a2a00 55%, #1a1a1a 70%)",
           }}
         />
 
-        {/* Slow shimmer */}
+        {/* Moving shimmer */}
         <motion.div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(120deg, transparent 40%, rgba(212,175,55,0.22) 50%, transparent 60%)",
+              "linear-gradient(120deg, transparent 40%, rgba(212,175,55,0.25) 50%, transparent 60%)",
             backgroundSize: "200% 200%",
-            mixBlendMode: "overlay",
           }}
           animate={{
             backgroundPosition: ["0% 50%", "100% 50%"],
           }}
           transition={{
-            duration: 9,
+            duration: 6,
             repeat: Infinity,
             ease: "linear",
           }}
         />
 
-        {/* Soft radial glow */}
+        {/* Soft radial glow (your original, enhanced) */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(212,175,55,0.10) 0%, transparent 65%)",
+              "radial-gradient(ellipse at center, color-mix(in oklab, var(--gold) 12%, transparent) 0%, transparent 60%)",
           }}
         />
       </div>
@@ -89,7 +89,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
           className="relative w-full max-w-sm md:max-w-md aspect-[3/2] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 rounded-sm"
           style={{ perspective: "1600px" }}
         >
-          {/* Invitation Paper */}
+          {/* Invitation card */}
           <AnimatePresence>
             {opened && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -123,29 +123,10 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
             )}
           </AnimatePresence>
 
-          {/* Envelope Body */}
-          <div
-            className="absolute inset-0 z-20 rounded-sm border border-white/10 shadow-soft pointer-events-none overflow-hidden"
-            style={{
-              backgroundColor: "var(--charcoal-2)",
-              boxShadow:
-                "inset 0 0 40px rgba(0,0,0,0.45), 0 20px 40px -20px rgba(0,0,0,0.6)",
-            }}
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to top right, transparent 49.7%, rgba(255,255,255,0.05) 49.85%, rgba(255,255,255,0.05) 50.15%, transparent 50.3%), linear-gradient(to top left, transparent 49.7%, rgba(255,255,255,0.05) 49.85%, rgba(255,255,255,0.05) 50.15%, transparent 50.3%)",
-              }}
-            />
-            <div
-              className="absolute left-0 right-0 bottom-0 h-1/2"
-              style={{
-                background:
-                  "linear-gradient(to top, rgba(0,0,0,0.18), transparent)",
-              }}
-            />
+          {/* Envelope body */}
+          <div className="absolute inset-0 z-20 rounded-sm border border-white/10 shadow-soft pointer-events-none overflow-hidden bg-[var(--charcoal-2)]">
+            <div className="absolute inset-0 bg-[linear-gradient(to_top_right,transparent_49.7%,rgba(255,255,255,0.05)_49.85%,rgba(255,255,255,0.05)_50.15%,transparent_50.3%),linear-gradient(to_top_left,transparent_49.7%,rgba(255,255,255,0.05)_49.85%,rgba(255,255,255,0.05)_50.15%,transparent_50.3%)]" />
+            <div className="absolute left-0 right-0 bottom-0 h-1/2 bg-gradient-to-t from-black/20 to-transparent" />
             <div className="absolute top-3 left-0 right-0 text-center">
               <p className="text-[9px] sm:text-[10px] tracking-[0.5em] text-gold/80 uppercase">
                 Wedding Invitation
@@ -164,31 +145,21 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
               delay: opened ? 0.2 : 0,
             }}
           >
-            <div
-              className="w-full h-full"
-              style={{
-                background:
-                  "linear-gradient(to bottom, oklch(0.50 0.001 60), oklch(0.40 0.001 60))",
-                clipPath: "polygon(0 0, 100% 0, 50% 100%)",
-                backfaceVisibility: "hidden",
-                boxShadow: "inset 0 -12px 25px -10px rgba(0,0,0,0.55)",
-                borderTop: "1px solid rgba(255,255,255,0.08)",
-              }}
-            />
+            <div className="w-full h-full bg-gradient-to-b from-[#6b6b6b] to-[#444] clip-triangle shadow-inner" />
           </motion.div>
 
-          {/* Wax Seal */}
+          {/* Wax seal */}
           <AnimatePresence>
             {!opened && (
               <motion.div
                 initial={{ x: "-50%", y: "-50%", scale: 0, opacity: 0 }}
                 animate={{ x: "-50%", y: "-50%", scale: 1, opacity: 1 }}
-                exit={{ x: "-50%", y: "-50%", scale: 0.6, opacity: 0 }}
+                exit={{ scale: 0.6, opacity: 0 }}
                 transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-                className="absolute left-1/2 z-40 pointer-events-none"
+                className="absolute left-1/2 z-40"
                 style={{ top: `${SEAL_TOP_PCT}%` }}
               >
-                <div className="w-20 h-20 rounded-full bg-gold flex items-center justify-center shadow-lg">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-200 via-yellow-500 to-yellow-800 shadow-xl flex items-center justify-center">
                   <span className="font-script text-3xl text-black">
                     {WEDDING.monogram}
                   </span>
@@ -204,7 +175,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.7 }}
           transition={{ delay: 1.2 }}
-          className="relative z-10 mt-10 text-xs tracking-[0.3em] text-muted-soft uppercase animate-pulse"
+          className="relative z-10 mt-10 text-xs tracking-widest text-muted-soft uppercase animate-pulse"
         >
           Tap the envelope to open
         </motion.p>
