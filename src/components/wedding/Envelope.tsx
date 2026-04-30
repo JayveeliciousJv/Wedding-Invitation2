@@ -25,8 +25,10 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
   }));
 
   return (
-    <section className="section-dark relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden grain">
-
+    <section
+      className="section-dark relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 overflow-hidden grain"
+      style={{ isolation: "isolate" }}
+    >
       {/* Base glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -36,30 +38,45 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
         }}
       />
 
-      {/* Shimmer layer 1 (luxury: softer + slightly blurred) */}
+      {/* ============================= */}
+      {/* EDGE-ONLY LUXURY SHIMMER FX */}
+      {/* ============================= */}
+
+      {/* Edge shimmer layer 1 */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(115deg, transparent 0%, transparent 42%, rgba(212,175,55,0.10) 50%, transparent 58%, transparent 100%)",
+            "linear-gradient(115deg, transparent 0%, transparent 40%, rgba(212,175,55,0.18) 50%, transparent 60%, transparent 100%)",
           backgroundSize: "300% 300%",
-          filter: "blur(6px)",
-          opacity: 0.55,
+
+          /* KEY: only edges visible */
+          WebkitMaskImage:
+            "radial-gradient(circle, transparent 55%, black 78%)",
+          maskImage: "radial-gradient(circle, transparent 55%, black 78%)",
+
+          opacity: 0.6,
+          filter: "blur(4px)",
           mixBlendMode: "screen",
         }}
         animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
         transition={{ duration: 12, ease: "easeInOut", repeat: Infinity }}
       />
 
-      {/* Shimmer layer 2 (more subtle drift + lower contrast feel) */}
+      {/* Edge shimmer layer 2 (softer counter drift) */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(250deg, transparent 0%, transparent 38%, rgba(212,175,55,0.06) 50%, transparent 62%, transparent 100%)",
+            "linear-gradient(250deg, transparent 0%, transparent 38%, rgba(212,175,55,0.10) 50%, transparent 62%, transparent 100%)",
           backgroundSize: "300% 300%",
-          filter: "blur(8px)",
-          opacity: 0.4,
+
+          WebkitMaskImage:
+            "radial-gradient(circle, transparent 58%, black 82%)",
+          maskImage: "radial-gradient(circle, transparent 58%, black 82%)",
+
+          opacity: 0.35,
+          filter: "blur(6px)",
           mixBlendMode: "soft-light",
         }}
         animate={{ backgroundPosition: ["100% 100%", "0% 0%", "100% 100%"] }}
@@ -156,19 +173,18 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
         </p>
       </motion.div>
 
-      {/* Envelope wrapper (unchanged) */}
-      <div className="relative z-10 w-full flex items-center justify-center">
+      {/* Envelope */}
+      <div className="relative z-50 w-full flex items-center justify-center">
         <motion.button
           type="button"
           onClick={handleOpen}
           whileHover={!opened ? { scale: 1.03 } : undefined}
           whileTap={!opened ? { scale: 0.98 } : undefined}
           transition={{ type: "spring", stiffness: 220, damping: 18 }}
-          aria-label="Open invitation"
           className="relative w-full max-w-sm md:max-w-md aspect-[3/2] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 rounded-sm"
           style={{ perspective: "1600px" }}
         >
-          {/* keep everything else unchanged */}
+          {/* keep rest of your envelope unchanged */}
         </motion.button>
       </div>
 
