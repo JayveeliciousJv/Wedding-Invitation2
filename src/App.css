@@ -33,6 +33,17 @@
   }
 }
 
+@keyframes goldShimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes floatDot {
+  from { transform: translateY(0px) scale(1); opacity: 0.15; }
+  to   { transform: translateY(-18px) scale(1.4); opacity: 0.35; }
+}
+
 .card {
   padding: 2em;
 }
