@@ -25,8 +25,16 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
   const FLAP_PCT = 55;
   const SEAL_TOP_PCT = FLAP_PCT;
 
-  // Ambient glitter — softer, fewer, more elegant
-  const ambientGlitter = Array.from({ length: 45 }, (_, i) => ({
+  // Detect low-power / in-app browsers (Messenger, Instagram, FB) — reduce effects
+  const isLowPower =
+    typeof navigator !== "undefined" &&
+    (/FBAN|FBAV|Instagram|Line|MicroMessenger/i.test(navigator.userAgent) ||
+      (navigator as any).deviceMemory <= 4 ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+  // Ambient glitter — fewer on low-power devices
+  const glitterCount = isLowPower ? 14 : 30;
+  const ambientGlitter = Array.from({ length: glitterCount }, (_, i) => ({
     id: i,
     left: `${(i * 7.7) % 100}%`,
     top: `${(i * 13.3 + 5) % 100}%`,
@@ -36,7 +44,8 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
   }));
 
   // Slow drifting gold embers
-  const embers = Array.from({ length: 10 }, (_, i) => ({
+  const emberCount = isLowPower ? 4 : 8;
+  const embers = Array.from({ length: emberCount }, (_, i) => ({
     id: i,
     left: `${(i * 17 + 5) % 100}%`,
     duration: 22 + (i % 4) * 3,
@@ -67,27 +76,43 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
           }}
         />
 
-        <motion.div
-          className="absolute -inset-[20%] opacity-[0.16]"
+        {/* Static gold halo (no rotation, no blur filter — uses pre-blurred radial) */}
+        <div
+          className="absolute inset-0 opacity-60"
           style={{
             background:
-              "conic-gradient(from 0deg at 50% 50%, transparent 0deg, #d4af37 60deg, transparent 120deg, transparent 240deg, #b08d26 300deg, transparent 360deg)",
-            filter: "blur(70px)",
+              "radial-gradient(ellipse 80% 60% at 50% 45%, rgba(212,175,55,0.18) 0%, rgba(176,141,38,0.08) 35%, transparent 70%)",
           }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 80, ease: "linear", repeat: Infinity }}
         />
 
-        <motion.div
-          className="absolute inset-0 opacity-20 mix-blend-screen"
-          style={{
-            background:
-              "linear-gradient(115deg, transparent 38%, rgba(241,213,146,0.45) 50%, transparent 62%)",
-            backgroundSize: "300% 300%",
-          }}
-          animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
-          transition={{ duration: 24, ease: "linear", repeat: Infinity }}
-        />
+        {/* Rotating halo — only on capable devices, no blur filter */}
+        {!isLowPower && (
+          <motion.div
+            className="absolute -inset-[10%] opacity-[0.18]"
+            style={{
+              background:
+                "conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(212,175,55,0.6) 60deg, transparent 120deg, transparent 240deg, rgba(176,141,38,0.5) 300deg, transparent 360deg)",
+              willChange: "transform",
+            }}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 90, ease: "linear", repeat: Infinity }}
+          />
+        )}
+
+        {/* Silk shimmer — skipped on low-power */}
+        {!isLowPower && (
+          <motion.div
+            className="absolute inset-0 opacity-20 mix-blend-screen"
+            style={{
+              background:
+                "linear-gradient(115deg, transparent 38%, rgba(241,213,146,0.45) 50%, transparent 62%)",
+              backgroundSize: "300% 300%",
+              willChange: "background-position",
+            }}
+            animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
+            transition={{ duration: 24, ease: "linear", repeat: Infinity }}
+          />
+        )}
 
         <motion.div
           className="absolute inset-0"
@@ -198,9 +223,10 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
                 }}
                 className="absolute inset-0 pointer-events-none z-[5]"
                 style={{
+                  // Pre-feathered radial — no blur filter needed (huge perf win on mobile WebViews)
                   background:
-                    "radial-gradient(circle at 50% 50%, rgba(255,220,140,0.55) 0%, rgba(212,175,55,0.25) 30%, transparent 65%)",
-                  filter: "blur(20px)",
+                    "radial-gradient(circle at 50% 50%, rgba(255,220,140,0.55) 0%, rgba(255,220,140,0.35) 18%, rgba(212,175,55,0.18) 40%, transparent 70%)",
+                  willChange: "transform, opacity",
                 }}
               />
             )}
