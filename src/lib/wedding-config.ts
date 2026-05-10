@@ -77,7 +77,7 @@ export const WEDDING = {
   // RSVP deadline
   rsvpDeadline: "May 20, 2026",
 
-  // Detailed entourage (custom rich content)
+  // Detailed entourage
   entourage: {
     invocation:
       "With praise and thanksgiving to God and blessings from our beloved parents",
@@ -103,14 +103,14 @@ export const WEDDING = {
     bridalEntourageHeading: "Bridal Entourage — to guide our way ahead",
     groomsmen: [
       "Mr. Marc Joseph C. Imperial",
-      "Mr. John Ford Eleccion",
+      "Mr. Jezam Vargas",
       "Mr. Jethro Vargas",
       "Engr. Julius V. Panti",
     ],
     bridesmaids: [
       "Ms. Thea Ysabelle I. Millares",
       "Ms. Maydelyn P. Vargas",
-      "Ms. Paula Louise de San Andres",
+      "Ms. Paula Louise De San Andres",
       "Ms. Nicole R. Magno",
     ],
     littleGroomsmen: [
@@ -134,7 +134,7 @@ export const WEDDING = {
       },
       cord: {
         intent: "To bind us together",
-        names: ["Arch. Francis John C. Imperial", "Ms. Noleen May V. dela Cruz"],
+        names: ["Ar. Francis John C. Imperial", "Ms. Noleen May V. Dela Cruz"],
       },
     },
 
@@ -152,13 +152,14 @@ export const WEDDING = {
 
     offertoryHeading: "Offertory Procession — Presentation of the Gifts",
     offertory: [
-      { gift: "Candle", name: "Mr. Dennis P. Vargas Jr." },
+      { gift: "Candle", name: "Mr. Van Harold C. Romero" },
       { gift: "Flowers", name: "Ms. Athena Liane O. Vargas" },
       { gift: "Eggs", name: "Mr. Felix O. Briones" },
       { gift: "Groceries", name: "Mr. John Michael Rodriguez" },
-      { gift: "Wine", name: "Ms. Melden V. Evangelista" },
-      { gift: "Host", name: "Ms. Kristel May B. Imperial" },
-      { gift: "Chalice", name: "Mr. Jezam Vargas" },
+      { gift: "Wine", name: "Ms. Kristel May B. Imperial" },
+      { gift: "Host", name: "Mr. Dennis P. Vargas" },
+      { gift: "Cruets", name: "Mrs. Melden V. Evangelista" },
+      { gift: "Chalice", name: "Mr. Alexander Evangelista" },
       { gift: "Fruits", name: "Mr. Michael Elmer Cea" },
     ],
   },
