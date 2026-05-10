@@ -165,6 +165,6 @@ export const WEDDING = {
   },
 
   musicUrl:
-    "/wedding.mp3",
+    "/Wedding2.mp3",
   rsvpEndpoint: "https://script.google.com/macros/s/AKfycbwf7Qe_RuR548rVJ0ZwgfR_GLNf-KcQlhzH8oSamyFLtr3-4bQOd71k3_RWd3WHQbfN/exec",
 };
