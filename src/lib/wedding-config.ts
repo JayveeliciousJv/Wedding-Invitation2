@@ -94,6 +94,7 @@ export const WEDDING = {
       "Mr. Ronnie De San Andres & Mrs. Teresita I. De San Andres",
       "Mr. Victor S. Vargas & Mrs. Lani O. Vargas",
       "Mr. Arnulfo P. Imperial & Mrs. Nora S. Imperial",
+      "Mrs. Marissa S. Aro",
     ],
     weddingPartyHeading: "To assist us with our needs",
     bestMan: "Mr. Darwin P. Vargas",
