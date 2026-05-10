@@ -154,7 +154,7 @@ export const WEDDING = {
     offertory: [
       { gift: "Candle", name: "Mr. Van Harold C. Romero" },
       { gift: "Flowers", name: "Ms. Athena Liane O. Vargas" },
-      { gift: "Eggs", name: "Mr. Felix O. Briones" }
+      { gift: "Eggs", name: "Mr. Felix O. Briones" },
       { gift: "Fruits", name: "Mr. Michael Elmer Cea" },
       { gift: "Host", name: "Mr. Dennis P. Vargas Jr." },
       { gift: "Groceries", name: "Mr. John Michael Rodriguez" },
