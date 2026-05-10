@@ -91,7 +91,7 @@ export const WEDDING = {
       "Mr. Dante Santelices & Mrs. Lani P. Santelices",
       "Mr. Valerio A. Cea Jr. & Mrs. Rosalina V. Cea",
       "Mr. Cesar Panti & Mrs. Arlene V. Panti",
-      "Mr. Ronnie de San Andres & Mrs. Teresita I. de San Andres",
+      "Mr. Ronnie De San Andres & Mrs. Teresita I. De San Andres",
       "Mr. Victor S. Vargas & Mrs. Lani O. Vargas",
       "Mr. Arnulfo P. Imperial & Mrs. Nora S. Imperial",
     ],
